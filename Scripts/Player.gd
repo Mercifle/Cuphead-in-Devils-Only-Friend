@@ -31,6 +31,14 @@ func _process(_delta):
 		else:
 			Speed.y += Gravity
 		
+		if Input.is_action_pressed("duck_mug"):
+			scale.y = 0.2
+			Speed.x = 0
+			DashSpeed = 0
+		else:
+			scale.y = 1
+			DashSpeed = DashSpeed
+		
 		if Input.is_action_just_pressed("dash_gas") and Direction != 0:
 			dash()
 	
@@ -38,7 +46,7 @@ func _process(_delta):
 	else:
 		if Input.is_action_just_pressed("dash_gas"):
 			dash_cancel()
-	
+			
 	Speed = move_and_slide(Speed, Vector2.UP)
 
 func get_parry_object():
