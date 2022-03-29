@@ -20,7 +20,7 @@ func _process(_delta):
 		# We need to implement a timer for this to work, though...
 		if Input.is_action_just_pressed("fire_bul"):
 			fire_bullet()
-		
+			
 		if Input.is_action_pressed("walk_left"):
 			Speed.x = -WalkSpeed
 			Direction = -1
@@ -46,14 +46,17 @@ func _process(_delta):
 		if Input.is_action_pressed("duck_mug"):
 			scale.y = 0.2
 			Speed.x = 0
+
 		else:
 			scale.y = 1
-		
+			
 		$ParryArea.global_scale = Vector2(1, 1)
 		
 		if Input.is_action_just_pressed("dash_gas") and Direction != 0 and CanDash:
 			dash()
-			CanDash = false
+			
+			if not Input.is_action_pressed("duck_mug"):
+				CanDash = false
 	
 	# Dashing
 	else:

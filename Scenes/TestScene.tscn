@@ -106,11 +106,13 @@ position = Vector2( 0, 11 )
 shape = SubResource( 4 )
 
 [node name="DashTimer" type="Timer" parent="Player"]
-wait_time = 0.072
+wait_time = 0.72
 one_shot = true
 
 [node name="HandHeight" type="Node2D" parent="Player"]
 position = Vector2( 1, -25 )
+
+[node name="BulletSeperation" type="Timer" parent="Player"]
 
 [node name="ParriableObject" parent="." instance=ExtResource( 3 )]
 
