@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/ShadedBox.png" type="Texture" id=2]
 [ext_resource path="res://Prefab/ParriableObject.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Prefab/MarchingChup.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scripts/TestSpawner.gd" type="Script" id=5]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
@@ -112,6 +114,12 @@ one_shot = true
 [node name="HandHeight" type="Node2D" parent="Player"]
 position = Vector2( 1, -25 )
 
+<<<<<<< Updated upstream
+=======
+[node name="BulletSeperation" type="Timer" parent="Player"]
+wait_time = 0.1
+
+>>>>>>> Stashed changes
 [node name="ParriableObject" parent="." instance=ExtResource( 3 )]
 
 [node name="ParriableObject2" parent="." instance=ExtResource( 3 )]
@@ -156,7 +164,7 @@ margin_left = -25.0
 margin_top = 14.0
 margin_right = 51.0
 margin_bottom = 71.0
-text = "Press [Tab] or [Control] to glide for 0.072 seconds."
+text = "Press [Tab] or [Control] to glide for 0.072 seconds. (If your crounching, you can jump and dash more than once)"
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -187,4 +195,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="MarchingChup" parent="." instance=ExtResource( 4 )]
+
+[node name="TestSpawner" type="Node2D" parent="."]
+position = Vector2( -63.8359, -73.726 )
+script = ExtResource( 5 )
+
 [connection signal="timeout" from="Player/DashTimer" to="Player" method="_on_DashTimer_timeout"]
+[connection signal="timeout" from="Player/BulletSeperation" to="Player" method="_on_BulletSeperation_timeout"]

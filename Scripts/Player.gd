@@ -11,6 +11,8 @@ var Direction = 0
 var LastDirection = 1 # Right by default
 var CanDash = false
 
+
+
 func _process(_delta):
 	if IsControllable:
 		if is_on_floor():
@@ -20,7 +22,14 @@ func _process(_delta):
 		# We need to implement a timer for this to work, though...
 		if Input.is_action_just_pressed("fire_bul"):
 			fire_bullet()
+<<<<<<< Updated upstream
 		
+=======
+			$BulletSeperation.start()
+		elif Input.is_action_just_released("fire_bul"):
+			$BulletSeperation.stop()
+			
+>>>>>>> Stashed changes
 		if Input.is_action_pressed("walk_left"):
 			Speed.x = -WalkSpeed
 			Direction = -1
@@ -36,7 +45,7 @@ func _process(_delta):
 		var ParryObjOrNull = get_parry_object()
 		var CanParry = ParryObjOrNull != null
 		
-		if Input.is_action_just_pressed("jump_spin") and (is_on_floor() or CanParry):
+		if Input.is_action_pressed("jump_spin") and (is_on_floor() or CanParry):
 			if CanParry:
 				ParryObjOrNull.parry_slap()
 			Speed.y = -JumpSpeed
@@ -87,9 +96,14 @@ func _on_DashTimer_timeout():
 onready var BULLET = load("res://Prefab/Bullet.tscn")
 var HAND_DIST = 20
 
+export var BULLET_SPREAD = 0.05
+
 func fire_bullet():
 	var bul = BULLET.instance()
-	bul.set_dir(LastDirection)
+	bul.set_dir(Vector2(LastDirection, rand_range(-BULLET_SPREAD, BULLET_SPREAD)))
 	bul.global_position.y = $HandHeight.global_position.y
 	bul.global_position.x = global_position.x + HAND_DIST * LastDirection
 	get_tree().get_root().add_child(bul)
+
+func _on_BulletSeperation_timeout():
+	fire_bullet()
