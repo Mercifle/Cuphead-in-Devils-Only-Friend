@@ -10,8 +10,7 @@ var Speed = Vector2()
 var Direction = 0
 var LastDirection = 1 # Right by default
 var CanDash = false
-
-
+onready var CheckYourPosition = global_position
 
 func _process(_delta):
 	if IsControllable:
@@ -22,14 +21,10 @@ func _process(_delta):
 		# We need to implement a timer for this to work, though...
 		if Input.is_action_just_pressed("fire_bul"):
 			fire_bullet()
-<<<<<<< Updated upstream
-		
-=======
 			$BulletSeperation.start()
 		elif Input.is_action_just_released("fire_bul"):
 			$BulletSeperation.stop()
 			
->>>>>>> Stashed changes
 		if Input.is_action_pressed("walk_left"):
 			Speed.x = -WalkSpeed
 			Direction = -1
@@ -107,3 +102,14 @@ func fire_bullet():
 
 func _on_BulletSeperation_timeout():
 	fire_bullet()
+
+func die():
+	$Camera2D/CanvasLayer/PopupPanel.popup_centered()
+	get_tree().paused = true
+	
+	global_position = CheckYourPosition
+	Speed = Vector2.ZERO
+
+func _on_Button_pressed():
+	get_tree().paused = false
+	$Camera2D/CanvasLayer/PopupPanel.visible = false
