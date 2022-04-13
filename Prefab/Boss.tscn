@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Sprites/ShadedBox.png" type="Texture" id=1]
+[ext_resource path="res://Boss.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 37.9366, 21.1915 )
+
+[node name="Boss" type="KinematicBody2D"]
+position = Vector2( -40.5379, 36.3802 )
+scale = Vector2( 1.03415, 1.24013 )
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 6 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.284326, -0.172394 )
+texture = ExtResource( 1 )
