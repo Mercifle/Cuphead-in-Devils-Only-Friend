@@ -12,6 +12,9 @@ var LastDirection = 1 # Right by default
 var CanDash = false
 onready var CheckYourPosition = global_position
 
+var HPDamage = 3
+var CanTakeDamage = true
+
 func _process(_delta):
 	if IsControllable:
 		if is_on_floor():
@@ -109,8 +112,27 @@ func die():
 	
 	global_position = CheckYourPosition
 	Speed = Vector2.ZERO
+	HPDamage = 3
 
 func _on_Button_pressed():
 	get_tree().paused = false
 	$Camera2D/CanvasLayer/PopupPanel.visible = false
 	global_position = CheckYourPosition
+
+func damage_down():
+	if not CanTakeDamage:
+		return
+	
+	CanTakeDamage = false
+	$DamageCooldown.start()
+	HPDamage -= 1
+	if HPDamage == 0:
+		die()
+
+func _on_EnemyArea_body_entered(body):
+	if body.is_in_group("Enemy"):
+		print("Touched enemy...")
+		damage_down()
+
+func _on_DamageCooldown_timeout():
+	CanTakeDamage = true

@@ -1,0 +1,103 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/ShadedBox.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 11.5, 19 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 11.7163
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 12.2195, 20.0198 )
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 1 )
+WalkSpeed = 250
+Gravity = 30
+JumpSpeed = 500
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -19 )
+scale = Vector2( 0.09, 0.15 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -19 )
+shape = SubResource( 1 )
+
+[node name="ParryArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ParryArea"]
+position = Vector2( 0, -7 )
+shape = SubResource( 2 )
+
+[node name="BulletSeperation" type="Timer" parent="."]
+wait_time = 0.2
+
+[node name="DashTimer" type="Timer" parent="."]
+wait_time = 0.072
+one_shot = true
+
+[node name="HandHeight" type="Node2D" parent="."]
+position = Vector2( 0, -26 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 0.5, 0.5 )
+smoothing_enabled = true
+offset_v = -1.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
+
+[node name="PopupPanel" type="PopupPanel" parent="Camera2D/CanvasLayer"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Camera2D/CanvasLayer/PopupPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+custom_constants/separation = 25
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Camera2D/CanvasLayer/PopupPanel/VBoxContainer"]
+margin_top = 253.0
+margin_right = 1024.0
+margin_bottom = 301.0
+text = "You're not a warrior, you're just a beginner.
+Dearest,
+Elder Kettle"
+align = 1
+
+[node name="Button" type="Button" parent="Camera2D/CanvasLayer/PopupPanel/VBoxContainer"]
+margin_left = 489.0
+margin_top = 326.0
+margin_right = 534.0
+margin_bottom = 346.0
+size_flags_horizontal = 6
+text = "Retry"
+
+[node name="EnemyArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyArea"]
+position = Vector2( 0, -19 )
+shape = SubResource( 3 )
+
+[node name="DamageCooldown" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="BulletSeperation" to="." method="_on_BulletSeperation_timeout"]
+[connection signal="timeout" from="DashTimer" to="." method="_on_DashTimer_timeout"]
+[connection signal="pressed" from="Camera2D/CanvasLayer/PopupPanel/VBoxContainer/Button" to="." method="_on_Button_pressed"]
+[connection signal="body_entered" from="EnemyArea" to="." method="_on_EnemyArea_body_entered"]
+[connection signal="timeout" from="DamageCooldown" to="." method="_on_DamageCooldown_timeout"]
