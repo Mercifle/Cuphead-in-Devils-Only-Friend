@@ -37,10 +37,10 @@ points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 normal = Vector2( 0, -15 )
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 15, 26 )
+extents = Vector2( 11.5, 19 )
 
 [sub_resource type="CircleShape2D" id=5]
-radius = 14.1979
+radius = 11.7163
 
 [node name="Node2D" type="Node2D"]
 
@@ -241,17 +241,18 @@ shape = SubResource( 3 )
 
 [node name="Player" type="KinematicBody2D" parent="."]
 script = ExtResource( 1 )
-Gravity = 20
-JumpSpeed = 80
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2( 0, -26 )
-shape = SubResource( 4 )
+WalkSpeed = 250
+Gravity = 30
+JumpSpeed = 500
 
 [node name="Sprite" type="Sprite" parent="Player"]
-position = Vector2( 0, -26 )
-scale = Vector2( 0.125, 0.2 )
+position = Vector2( 0, -19 )
+scale = Vector2( 0.09, 0.15 )
 texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2( 0, -19 )
+shape = SubResource( 4 )
 
 [node name="ParryArea" type="Area2D" parent="Player"]
 
@@ -271,19 +272,24 @@ position = Vector2( 0, -26 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
-zoom = Vector2( 0.8, 0.8 )
+zoom = Vector2( 0.5, 0.5 )
 smoothing_enabled = true
 offset_v = -1.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Player/Camera2D"]
 
 [node name="PopupPanel" type="PopupPanel" parent="Player/Camera2D/CanvasLayer"]
+pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Player/Camera2D/CanvasLayer/PopupPanel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
 custom_constants/separation = 25
 alignment = 1
 __meta__ = {

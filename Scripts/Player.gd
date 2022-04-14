@@ -40,7 +40,7 @@ func _process(_delta):
 		var ParryObjOrNull = get_parry_object()
 		var CanParry = ParryObjOrNull != null
 		
-		if Input.is_action_pressed("jump_spin") and (is_on_floor() or CanParry):
+		if Input.is_action_just_pressed("jump_spin") and (is_on_floor() or CanParry):
 			if CanParry:
 				ParryObjOrNull.parry_slap()
 			Speed.y = -JumpSpeed
@@ -113,3 +113,4 @@ func die():
 func _on_Button_pressed():
 	get_tree().paused = false
 	$Camera2D/CanvasLayer/PopupPanel.visible = false
+	global_position = CheckYourPosition
